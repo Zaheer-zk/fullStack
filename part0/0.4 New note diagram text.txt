@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+NOTE over browser: user clicks on submit button. browser generates post request with body containing {'note':'data'}
+
+browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+NOTE over server: add new note to global list after appending current date, redirect browser to notes page
+
+server-->>browser: Redirect to /exampleapp/notes location (status code 302)
+browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->>browser: HTML-code
+browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->>browser: main.css
+browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->>browser: main.js
+
+NOTE over browser: browser starts executing js-code that requests JSON data from server 
+
+browser->>server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->>browser: [{ content: "Hello world!!!", date: "2024-03-01" }, ...]
+
+NOTE over browser: browser executes the event handler that renders notes to display

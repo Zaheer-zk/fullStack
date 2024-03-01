@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+note over browser: user clicks submit, Form behavior add's note to local from redrawNotes() to show in list
+
+browser->>server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server: add note to database/global list send acknowlegment
+
+server->>browser: {"message":"Note created"}, response code 201
+
+note over browser: console.log(response)
